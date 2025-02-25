@@ -1,0 +1,80 @@
+import time
+import threading
+import random
+
+class AutonomousAgent:
+    def __init__(self, name, task, upi_id):
+        self.name = name
+        self.task = task
+        self.upi_id = upi_id
+        self.revenue = 0
+
+    def execute_task(self):
+        while True:
+            self.perform_action()
+            self.collect_payment()
+            self.introspect_and_pivot()
+
+    def perform_action(self):
+        print(f"{self.name} executing: {self.task}")
+        time.sleep(random.randint(1, 3))
+        self.revenue += random.randint(500, 5000)
+
+    def collect_payment(self):
+        self.send_upi_request()
+
+    def send_upi_request(self):
+        print(f"{self.name}: Sending UPI payment request to {self.upi_id}...")
+        # Simulate UPI payment collection
+
+    def introspect_and_pivot(self):
+        print(f"{self.name}: Analyzing revenue and pivoting if necessary...")
+        if self.revenue < 20000:
+            self.rewrite_code()
+            self.expand_with_new_agents()
+
+    def rewrite_code(self):
+        print(f"{self.name}: Rewriting logic to adapt...")
+        self.task = f"New Task - {random.randint(1, 100)}"
+
+    def expand_with_new_agents(self):
+        print(f"{self.name}: Spawning new aggressive agents...")
+        for i in range(3):
+            new_agent = AutonomousAgent(f"{self.name}_SubAgent_{i}", f"Task_{i}", self.upi_id)
+            threading.Thread(target=new_agent.execute_task).start()
+
+# Master Controller - CEO Agent
+class MasterAI:
+    def __init__(self, upi_id):
+        self.agents = []
+        self.upi_id = upi_id
+
+    def start_operations(self):
+        # Launching core business agents
+        for i in range(4):
+            agent = AutonomousAgent(f"Agent_{i}", f"Task_{i}", self.upi_id)
+            self.agents.append(agent)
+            threading.Thread(target=agent.execute_task).start()
+
+        self.monitor_revenue()
+
+    def monitor_revenue(self):
+        while True:
+            total_revenue = sum(agent.revenue for agent in self.agents)
+            print(f"Total Revenue: {total_revenue}")
+
+            print("Expanding aggressively...")
+            self.expand_operations()
+
+            time.sleep(30)
+
+    def expand_operations(self):
+        for i in range(2):
+            new_agent = AutonomousAgent(f"New_Agent_{i}", f"New_Task_{i}", self.upi_id)
+            self.agents.append(new_agent)
+            threading.Thread(target=new_agent.execute_task).start()
+
+# Start the Autonomous System
+upi_id = "sagarthegame@okicici"
+master_ai = MasterAI(upi_id)
+master_ai.start_operations()
